@@ -86,7 +86,7 @@ int main()
 
     while (nHoursCount < 48)
     {
-        enum change
+        /*enum change
         {
             //outputs
             CH_MAIN_POWER = 1,     //main power in home
@@ -98,7 +98,7 @@ int main()
             CH_CONDITIONER = 64,   //air conditioning in the home
             //inputs
             CH_MOVE_GARDEN = 128   //move in the garden
-        };
+        };*/
         int nChange = 0;
 
         string sInput;
@@ -171,47 +171,47 @@ int main()
         if (sConditionMove == "yes" && !(nState & MOVE_GARDEN))
         {
             nState |= MOVE_GARDEN;
-            nChange |= CH_MOVE_GARDEN;
+            nChange |= MOVE_GARDEN;
         }  
         else if (sConditionMove == "no" && nState & MOVE_GARDEN)
         {
             nState &= ~MOVE_GARDEN;
-            nChange |= CH_MOVE_GARDEN;
+            nChange |= MOVE_GARDEN;
         }
 
         if (sConditionLightHome == "on" && !(nState & LIGHT_HOUSE))
         {
             nState |= LIGHT_HOUSE;
-            nChange |= CH_LIGHT_HOUSE;
+            nChange |= LIGHT_HOUSE;
         }   
         else if (sConditionLightHome == "off" && nState & LIGHT_HOUSE)
         {
             nState &= ~LIGHT_HOUSE; 
-            nChange |= CH_LIGHT_HOUSE;
+            nChange |= LIGHT_HOUSE;
         }
 
         //Heating waterpipe program
         if (fTempOutside < 0 && !(nState & HEAT_PIPE))
         {
             nState |= HEAT_PIPE;
-            nChange |= CH_HEAT_PIPE;
+            nChange |= HEAT_PIPE;
         }
         else if (fTempOutside > 5 && nState & HEAT_PIPE)
         {
             nState &= ~HEAT_PIPE; 
-            nChange |= CH_HEAT_PIPE;
+            nChange |= HEAT_PIPE;
         }
 
         //outside light program 16:00 - 5:00     
         if ((nTime > 15 || nTime < 6) && nState & MOVE_GARDEN && !(nState & LIGHT_GARDEN))
         {
             nState |= LIGHT_GARDEN;
-            nChange |= CH_LIGHT_GARDEN;
+            nChange |= LIGHT_GARDEN;
         }
         else if ((nTime > 5 && nTime < 16 || !(nState & MOVE_GARDEN)) && nState & LIGHT_GARDEN)
         {
             nState &= ~LIGHT_GARDEN;
-            nChange |= CH_LIGHT_GARDEN;
+            nChange |= LIGHT_GARDEN;
         }
                 
         //heating program
